@@ -1,0 +1,1530 @@
+Angular interview question: 
+
+fibonacci series
+palindrom
+array duplicate
+new Set(arry);
+eventCapure/eventBubling
+
+Javascript  :=============================================>
+	
+	Scope In JavaScript :
+		Scope determines the accessibility (visibility) of variables.
+	
+		JavaScript has 3 types of scope:
+			Block scope =>  let and const. These two keywords provide Block Scope in JavaScript. 
+							Variables declared with the var keyword can NOT have block scope can be accessed from outside the block.
+							let Variables declared inside a {} block cannot be accessed from outside the block
+							
+			Function scope => Local variables have Function Scope, They can only be accessed from within the function.
+							JavaScript has function scope: Each function creates a new scope.
+							Variables defined inside a function are not accessible (visible) from outside the function.
+							Variables declared with var, let and const are quite similar when declared inside a function.
+							
+							
+			Global scope => Variables declared with var, let and const are quite similar when declared outside a block.
+							They all have Global Scope:
+			
+			imp => Variable declared withaut var keyword "becomes global"  
+
+0. OOPS Concept 
+	Object --> Entity of class ex: student 
+	
+	Class --> Blueprint of object  ex : => id, name, rollNo, play(),read(), walk()
+	
+	Abstraction : Hiding actual implementation, showing neccessary details
+				  
+	Encapsulation : Binding propety and behavior in single entity called Encapsulation.
+	
+	Inheritance : Getting proprties and behavior from (Parent Class => Child Class) /(Super Class => Sub Class )/ (Base Class => Derived Class); 
+					Draw() => DrawCircle extends Draw()
+					- multiple inheritance  - JavaScript does not support multiple inheritance
+					- multilevel inheritance
+	
+	Polymorphism : =>  The ability of a variable, function or object to take on multiple forms. 
+					 Ex: Method overloading /  Method Overriding
+					 Method overloading is a type of static polymorphism. 
+					 In Method overloading, we can define multiple methods with the same name but with different parameters. 
+					 
+					 Method Overriding is a mechanism to achieve dynamic polymorphism where the super class and the sub-class have same methods,
+					 including the parameters and signature.
+
+1. diff btn let and var
+	let is block-scoped.	                    var is function scoped.
+	let does not allow to redeclare variables.	var allows to redeclare variables.
+	Hoisting not allowed int let				Hoisting occurs in var.
+	let is a feature of ES6						var is an ECMA Script 1 feature.
+	
+2. what is variables hosting ?
+	Hoisting is JavaScript's default behavior of moving declarations to the top of variables/function.
+	In JavaScript,a variable can be used before it has been declared.
+	const and let can not be hoisted.
+	
+3. what is closure in javascript ?
+	function with its lexical scope forms closure in javascript.
+	A closure is how functions in Javascript can remember and access its surrounding state (or lexical environment). 
+	Closures are created whenever a function accesses a variable defined outside of its own scope. 
+	When considering closures and how they operate, it may be helpful to consider the below example. 
+	
+	const globalVar = "xyz";
+	(function outerFunc(outerArg){
+		const outerVar = 'a';
+		(function innerFunc(innerArg){
+		  const innerVar = 'b';
+		  console.log(outerArg) // 123
+		  console.log(innerArg) // 456
+		  console.log(outerVar) // "a"
+		  console.log(innerVar) // "b"
+		  console.log(globalVar) // "xyz"
+		})(456)
+	})(123)
+	  
+4. Higher order function ?
+	First-Class Function:
+		A programming language is said to have First-class functions if functions in that language are treated like other variables. 
+	So the functions can be assigned to any other variable or passed as an argument or can be returned by another function.
+	JavaScript treat function as a first-class-citizens. This means that functions are simply a value and are just another type of object.
+	
+	Higher-Order Function: 
+		A function that receives another function as an argument or that returns a new function or both is called Higher-order functions. 
+	Higher-order functions are only possible because of the First-class function.
+	
+	map() :	syntax: array.map(function(currentValue, index, arr), thisValue)
+			creates a new array from calling a function for every array element.
+			does not execute the function for empty elements.
+			does not change the original array.
+	Ex:
+	const finalParticipants = ['Taylor', 'Donald', 'Don', 'Natasha', 'Bobby']; 
+	// add string after each final participant
+	const announcements = finalParticipants.map(member => {
+	  return member + ' joined the contest.';
+	})
+	console.log(announcements);
+		
+	reduce() => Return final value once all iteration complete
+	Ex: arr.reduce((acc, item)=>{
+		return acc + item;
+	})
+
+	forEach() : Return Value undefined
+
+	filter()  // return new array from each element callback function on condition true/false.
+	Ex :
+	const randomNumbers = [4, 11, 42, 14, 39];
+	const filteredArray = randomNumbers.filter(n => {  
+		return n > 5;
+	});
+	
+	Q. difference between filter and map? 
+	Map: returns an new array of pieces of information from the original array. 
+		In the callback function, return the data you wish to be part of the new array. 
+	Filter: returns a subset of the original array based on custom criteria.
+	
+5. Data types in Js?
+   primitive =>	number, string, boolean, bigInt, symbol, undefined, null
+   Object => Object, Function, undefined
+   SNNUBO => string, number, null, undefined, boolean, Object  
+
+6. splice(): 
+	The splice() method can be used to add new items to an array:
+		Syntax : 
+		
+		const fruits = ["Banana", "Orange", "Apple", "Mango"];
+		fruits.splice(2, 0, "Lemon", "Kiwi");
+		
+		The first parameter (2) defines the position where new elements should be added (spliced in).
+		The second parameter (0) defines how many elements should be removed.
+		The rest of the parameters ("Lemon" , "Kiwi") define the new elements to be added.
+		The splice() method returns an array with the deleted items.
+		It modifies original array
+		
+	slice() : 
+	The slice() method slices out a piece of an array into a new array. The slice() method creates a new array.
+	Syntax: array.slice(start, end)
+			start	Optional, Start position. Default is 0, Negative numbers select from the end of the array.
+			end		Optional, End position. Default is last element.
+			Negative numbers select from the end of the array,  method does not change the original array.
+	
+7. find Min and Max from numbered array ?	
+	Math.max.apply(null,arr) => max number / Math.max(...arr)
+	Math.min.apply(null,arr) => min number	/ Math.min(...arr)
+
+8.What is the difference between Local storage & Session storage?
+	Local Storage – The data is not sent back to the server for every HTTP request (HTML, images, JavaScript, CSS, etc) – 
+				reducing the amount of traffic between client and server. It will stay until it is manually cleared through settings or program.
+					
+	Session Storage – It is similar to local storage; 
+				the only difference is while data stored in local storage has no expiration time, 
+				data stored in session storage gets cleared when the page session ends. Session Storage will leave when the browser is closed.
+
+9. What is the difference between window & document in JavaScript?
+	Window													Document
+	JavaScript window is a global object 					The document also comes under the window	
+	which holds variables, functions, history, location.	and can be considered as the property of the window.
+
+Q spread oerator in javascript ?
+	let newArr = [2,3]
+	let arr = [1,...newArr,4,5]
+	console.log(arr)
+
+Q. push() method 
+	add elements end of the array.
+	return new length on adding element in array.
+	can add multiple element at a time.
+	
+Q Short circuit evaluation ?
+
+	const var1 = "user1" || "user2"
+	console.log(var1);  o/p=> user1
+	
+	const var1 = "user1" && "user2"
+	console.log(var1);  o/p=> user2
+
+	const isUser = true;
+	isUser && console.log("User logged In");  o/p=> User logged In
+
+	const isUser = false;
+	isUser && console.log("User logged In");  o/p=> false
+
+Q  split() and spread (...) operator
+		😀 emojis created by 2 byte
+		"mysmile😀" if we create array of this string using split() length will be 9 (length will increase by one)
+		"mysmile😀" if we create array of this string using spread (...) operator length will be 8 (accurate length)
+		
+Q '+' is concatination operator think before ans
+	+"1" + true + "1"  => 21
+	"1" + true + "1"  => '1true1'
+	"1" - true => 0
+	
+Q this keyword in javascripit
+	Read article for details:
+	https://www.javascripttutorial.net/javascript-this/
+	
+Q	bind() method in javascript
+
+		(3)Method invocation
+			when you call a method without specifying its object, 
+		JavaScript sets this to the global object (window) in non-strict mode and undefined in the strict mode.
+		To fix this issue, you use the bind() method of the Function.prototype object. 
+		The bind() method creates a new function whose the this keyword is set to a specified value.
+
+		let car = {
+			brand: 'Honda',
+			getBrand: function () {
+				return this.brand;
+			}
+		}
+
+		console.log(car.getBrand()); // Honda
+		In this example, the this object in the getBrand() method references the car object.
+		Since a method is a property of an object which is a value, you can store it in a variable.
+
+		let brand = car.getBrand;
+		And then call the method via the variable
+		console.log(brand()); // undefined
+
+		You get undefined instead of "Honda" because when you call a method without specifying its object, 
+		JavaScript sets this to the global object in non-strict mode and undefined in the strict mode.
+
+		To fix this issue, you use the bind() method of the Function.prototype object. 
+		The bind() method creates a new function whose the this keyword is set to a specified value.
+
+		let brand = car.getBrand.bind(car);
+		console.log(brand()); // Honda
+
+		In this example, when you call the brand() method, the this keyword is bound to the car object. For example:
+
+		let car = {
+			brand: 'Honda',
+			getBrand: function () {
+				return this.brand;
+			}
+		}
+
+		let bike = {
+			brand: 'Harley Davidson'
+		}
+
+		let brand = car.getBrand.bind(bike);
+		console.log(brand());
+		Output:Harley Davidson
+		
+		In this example, the bind() method sets the this to the bike object, 
+		therefore, you see the value of the brand property of the bike object on the console.
+			
+
+Q	call() and apply() method
+
+	4) Indirect Invocation
+		In JavaScript, functions are first-class citizens. In other words, functions are objects, which are instances of the Function type.
+		The Function type has two methods: call() and apply(). These methods allow you to set the this value when calling a function. 
+		For example:
+
+		function getBrandCall(prefix) {
+			console.log(prefix + this.brand);
+		}
+		
+		function getBrandApply(prefix) {
+			console.log(prefix[0] + this.brand);
+		}
+
+		let honda = {
+			brand: 'Honda'
+		};
+		let audi = {
+			brand: 'Audi'
+		};
+
+		getBrandCall.call(honda, "It's a ");
+		getBrandApply.apply(audi, ["It's an "]);
+		
+		Output:
+		It's a Honda
+		It's an Audi
+
+		The apply() method is similar to the call() method except that its second argument is an array of arguments.
+
+		getBrand.apply(honda, ["It's a "]); // "It's a Honda"
+		getBrand.apply(audi, ["It's an "]); // "It's a Audi"
+
+	
+Angular :================================================>
+
+1. diff btn observable and promises
+		Promise							Observable
+	emmit one time value 			emmits value over the period
+	resolve reject					subscribe, unsubscribe
+	Emits a single value	    	Emits multiple values over a period of time
+	Not Lazy                 		Lazy. An observable is not called until we subscribe to the observable 
+	Cannot be cancelled      		Can be cancelled by using the unsubscribe() method
+									Observable provides operators like map, forEach, filter, reduce, retry, retryWhen etc.
+								
+	Observable vs Subjects							
+	*observable are unicasting and Subjects are multicasting 
+	(Multicasting basically means that one Observable execution is shared among multiple subscribers.)
+	*observable emmits data only subscriber is available and Subjects emits data even if subscriber not available
+
+2. what is directives and which types of directives - 
+	1. Structural directives ->  *ngIf, *ngFor, *ngSwitch
+	2. Attribute directives -> [ngStyle] [ngClass]
+	3. Component : building block @Component -> template,
+	4. Custom directives -> checkout (E:\Angular startup\Playground-2\playgroundInterview\src\app\Directive)
+	ng g directive directive_name
+	
+	
+3. what is interpolation
+	{{ angular expresiion }}
+	
+4. what is service, What is service and provider in Angular?
+	=> A Service is a JavaScript object that exists in your application, and a Provider is the way you gain access to that object.	
+	
+5. how we can pass data from child component to parent component
+	=>  1. Shared Service
+		2. @input 
+		   @output
+	   
+6. explain @input and @output using eventemitter example?
+	=> @input => Parent to Child 
+	   @output => Child to parent  using "new EventEmmiter()"
+	   
+	 @Input() childMessage: string;
+	 @Output() messageEvent = new EventEmitter<string>();
+	
+7. what is routing in angular ?
+	The process of defining navigation element and the corresponding view is called Routing.
+	
+8. what are the different types of forms?
+	=> Template driven => (ngForm)
+	   Reactive Form => (FormGroup, FormControl, FormBuilder)
+		
+9. diff. template driven and reactive forms?
+  * dynamic forms ?
+  
+10. what is PWA ?   => Progressive Web Application, which uses Html Css, Javascript to develop webapp, mobile app. 
+	is nothing but website runs on different platform example technologies Angular, ReactJs, VueJs, ReactJs.
+11. how we can application authenticate in routing ? -- AuthGuard
+12. how we can add component in project ? -- ng g c component_name
+
+13. how we use custom pipes ? 
+	=>  command to create pipe using CLI: ng generate pipe pipe_name
+		Pipe, PipeTransform(interface)->(transform(array, argument) method)=> add in declaration array app.module.ts
+		Ex:
+		import { Pipe, PipeTransform } from '@angular/core';
+		@Pipe({
+		  name: 'hoverPipe'
+		})
+		export class HoverPipe implements PipeTransform {
+		  transform(value: unknown, ...args: unknown[]): unknown {
+			return null;
+		  }
+		}
+		
+		
+		
+Parameterized Pipe :			PipeName:Param1     :Param2 		
+	  *ngFor="let user of users | filter:filterModel:'name'"
+
+How do you chain pipes?
+	You can chain pipes together in potentially useful combinations as per the needs. 
+	Let's take a birthday property which uses date pipe(along with parameter) and uppercase pipes as below	  
+	 @Component({
+	  selector: 'app-birthday',
+	  template: `<p>Birthday is {{  birthday | date:'fullDate' | uppercase}} </p>` // THURSDAY, JUNE 18, 1987
+	 })
+	 export class BirthdayComponent {
+	   birthday = new Date(1987, 6, 18);
+	 }
+	
+14. any other scenario for custom pipes ? filter data, conversion of data
+
+15. what is dependancy injection ?
+	creating common code in service and adding its dependancy by all componets in constructor,
+	@Injectable decorator used to create service class for injection.
+
+16. what are the types of compilers ?
+	JIT => With JIT, your code is compiled at runtime in the browser.
+	AOT => 8th version, With AOT, your code is compiled before App downloaded in Browser.
+
+17. how we can set same style in whole application ?
+	=> global style file in angular uses external css type and applied to whole component template by classes.
+	It is good practise to use global/central css.
+
+18. how do you test your app ?
+	If Angular CLI is used to manage the Angular projects, it will automatically support Jasmine and Karma Configurations. 
+	All you need in order to test your application is to type the command ng test. 
+	As far as possible, run tests on real browsers and devices to ensure that software is verified under real user conditions.
+
+19. what is httpclient ?
+	httpClient is class provided in angular/core package
+	used to call API from server using get, post, put, delete methods
+	it handle asynch data transfer using Observable of Rxjs lib
+
+21.Content projection
+	Content projection is a pattern in which you insert, or project, the content you want to use inside another component.
+	using <ng-content> tag we can project a temaplate from child component to parent
+	view can target by class, attribute
+	
+22.	ng-template => element defines template that doent render anything by default, Used with
+					structural directive like *ngIf, *ngFor, *ngSwitch
+					
+					<ng-template> </ng-template> => This will not show in dom by default
+							
+					Ex: <div *ngIf="true; else ngTemplateShow> 
+							This is shown if true value
+						</div>
+						<ng-template #ngTemplateShow> 
+							this will show if false value 
+						</ng-template>
+						
+23	ng-container => think it is as external parent element used for wrapping child element.
+					
+					<ng-container *ngIf="condition">  => This will not add extra div in dom
+						<div *ngIf="true; else ngTemplateShow> 
+							This is shown if true value
+						</div>
+						<ng-template #ngTemplateShow> 
+							this will show if false value 
+						</ng-template>
+					</ng-container>
+
+24.constructor and ngOnInit
+
+25 what module import to use structural directives - Ans : CommonModule @angular/common
+
+26.Common modules to use angular - BrowserModule, CommonModule, FormsModule, ReactiveFormsModule,RouterModule,HttpClientModule
+
+27. Difference between FormControl and FormBuilder
+	The FormBuilder is the class that is used to create both FormGroups and FormControls.
+
+28 .Rxjs operator used.
+
+	(Rxjs operator source : https://blog.angular-university.io/rxjs-higher-order-mapping/)
+	
+	concatMap => is used to concat two observables, it will wait to exceution of first and then start second exe of observable.	
+				29. firstPOSTCallToAPI('url', data).pipe(
+				concatMap(result1 => secondPOSTCallToAPI('url', result1))
+				concatMap(result2 => thirdPOSTCallToAPI('url', result2))
+				concatMap(result3 => fourthPOSTCallToAPI('url', result3))....)
+				.subscribe(success => { /* display success msg */ },errorData => { /* display error msg */ });
+	
+	mergeMap  => but unlike concatMap, in the case of mergeMap we don't have to wait for the previous inner Observable to complete,
+				 before triggering the next innner Observable				 
+				What is difference between map and mergeMap?
+				mergeMap is a combination of Observable merge and map . 
+				There are times when your map or projection will generate multiple Observables. 
+				For example, now I have an array of characters, and for each character, I would like to make a backend call and get some information.
+	
+	switchMap => In switching, unlike merging, if a new Observable starts emitting values we are then going to unsubscribe from the previous Observable, 
+				before subscribing to the new Observable.
+				Projects each source value to an Observable which is merged in the output Observable, 
+				emitting values only from the most recently projected Observable.
+				used to handle multiple requests ex: on type user search multiple value.
+
+	What is the difference between Subject and BehaviorSubject?
+	A BehaviorSubject holds one value. When it is subscribed it emits the value immediately. A Subject doesn't hold a value.
+	BehaviorSubject should be created with an initial value: new Rx.BehaviorSubject(1)
+	Consider ReplaySubject if you want the subject to get previously publised values.
+
+30.Difference between reactive and template driven form
+
+31.What is router outlet, lazy loading, canLoad, canActivate, canDeactivate
+
+	Lazy loading syntax:
+	
+	const routes: Routes = [
+	  {
+		path: 'customers',
+		loadChildren: () => import('./customers/customers.module').then(module => module.CustomersModule)
+	  },
+	]
+
+
+32. What is Non null type assertion operator? =>  {{contact!.email}} 
+	-You can use the non-null type assertion operator to suppress the Object is possibly 'undefined' error.
+
+33. What is Angular Ivy?
+	Angular Ivy is a new rendering engine for Angular. You can choose to opt in a preview version of Ivy from Angular version 8.
+	1.You can enable ivy in a new project by using the --enable-ivy flag with the ng new command:
+		ng new ivy-demo-app --enable-ivy
+	2.You can add it to an existing project by adding enableIvy option in the angularCompilerOptions in your project's tsconfig.app.json.
+		{
+		  "compilerOptions": { ... },
+		  "angularCompilerOptions": {
+			"enableIvy": true
+		  }
+		}
+	
+34. What are the features included in ivy preview?
+	You can expect below features with Ivy preview,
+	1.Generated code that is easier to read and debug at runtime
+	2.Faster re-build time
+	3.Improved payload size
+	4.Improved template type checking
+
+35. Can I use AOT compilation with Ivy?
+	Yes, it is a recommended configuration. Also, AOT compilation with Ivy is faster. 
+	So you need set the default build options(with in angular.json) for your project to always use AOT compilation.
+	{
+	  "projects": {
+		"my-project": {
+		  "architect": {
+			"build": {
+			  "options": {
+				...
+				"aot": true,
+			  }
+			}
+		  }
+		}
+	  }
+	}
+
+36.What is Bazel tool?
+	Bazel is a powerful build tool developed and massively used by Google and 
+	it can keep track of the dependencies between different packages and build targets. 
+	In Angular8, you can build your CLI application with Bazel. 
+	Note: The Angular framework itself is built with Bazel.
+
+37.How do you upgrade angular version?
+	The Angular upgrade is quite easier using Angular CLI ng update command as mentioned below
+	ng update @angular/cli @angular/core
+
+1. What is angular ?
+	Framework - by google
+	built on typescript
+	MVVM (model view view model) 
+	SPA (single page application)
+		- Routing
+		- DI
+		- Input/Output events.
+
+2. Angularjs vs Angular
+	1           2+
+	js          typescript
+	controller  component
+	CLI no      CLI Yes
+	mobile no   Mobile Yes
+
+5. Difference bet Component and Directive ?
+	Component - view , directive -view
+	DOM - Component ,  DOM - many directive
+	VIEW- mandaotry,   Not-use view
+	
+	
+6. Life Cycle hook
+		Every component in Angular has a lifecycle, different phases it goes through from the time of creation to the time it's destroyed. 
+	Angular provides hooks to tap into these phases and trigger changes at specific phases in a lifecycle.
+
+	ngOnChanges( )
+	ngOnInit( )
+	ngDoCheck( )
+	ngAfterContentInit( )
+	ngAfterContentChecked( )
+	ngAfterViewInit( )
+	ngAfterViewChecked( )
+	ngOnDestroy( )
+
+	ngOnChanges( ) This hook/method is called before ngOnInit and whenever one or more @input properties of the component changes.
+	This method/hook receives a SimpleChanges object which contains the previous and current values of the property.
+
+	ngOnInit( ) This hook gets called once, after the ngOnChanges hook.
+	It initializes the component and sets the input properties of the component.
+
+	ngDoCheck( ) It gets called after ngOnChanges and ngOnInit and is used to detect and act on changes that cannot be detected by Angular.
+	We can implement our change detection algorithm in this hook. 
+
+	ngAfterContentInit( ) It gets called after the first ngDoCheck hook. 
+	This hook responds after the content gets projected inside the component.
+
+	ngAfterContentChecked( ) It gets called after ngAfterContentInit and every subsequent ngDoCheck. 
+	It responds after the projected content is checked.
+
+	ngAfterViewInit( ) It responds after a component's view, or a child component's view is initialized.
+
+	ngAfterViewChecked( ) It gets called after ngAfterViewInit, and it responds after 
+	the component's view, or the child component's view is checked.
+
+	ngOnDestroy( ) It gets called just before Angular destroys the component. 
+	This hook can be used to clean up the code and detach event handlers.
+
+Let’s understand how to use ngOnInit hook, since it’s the most oftenly used hook. 
+If one has to process lot of data during component creation, it’s better to do it inside ngOnInit hook rather than the constructor:
+
+8.What is angular compiler : tool used to compile angular app and libraries.
+
+9.Compilation flow of typescript
+	a.Create an instance of the TypeScript compiler, with some additional Angular functionality.
+	b.Scan every file in the project for decorated classes, and build a model of which components, directives, pipes, NgModules, etc. need to be compiled.
+	c.Make connections between decorated classes (ex. which directives are used in which component templates).
+	d.Leverage TypeScript to type-check expressions in component templates.
+	e.Compile the whole program, including generating extra Angular code for every decorated class.
+
+10.What is JIT and AOT
+	a.Just-in-Time (JIT) is a type of compilation that compiles your app in the browser at runtime.
+	b.AOT (Ahead-of-Time Compilation) Ahead-of-Time (AOT) is a type of compilation that compiles your app at build time.
+		What are macros?
+		The AOT compiler supports macros in the form of functions or static methods that return an expression in a single return expression. 
+		For example: 
+			export function wrapInArray<T>(value: T): T[] {
+			  return [value];
+			}
+			
+			You can use it inside metadata as an expression,
+			@NgModule({
+			  declarations: wrapInArray(TypicalComponent)
+			})
+			export class TypicalModule {}
+
+11.Difference between JIT and AOT
+
+	JIT
+		a.Process 				
+			Development => production=> App download in browser => Angular parses and compiles Template
+		b.command
+			ng build 
+			ng serve
+
+	AOT:
+		a.Process 
+			Development => Angular parses and compiles Template => Production => App download in browser
+		b.Command
+			ng build --aot
+			ng serve --aot
+
+12. What is angular service
+	Service is a piece of reusable code with a focused purpose. A code that you will use across multiple components in your application.
+
+13. What is Angular Services used for?
+	- Share logic or data across components
+	- Encapsulate external interactions like data access
+	- Services are easier to test. They are easier to Debug.
+	- We can reuse the service at many places.
+
+	basically service file create using below command
+	ng g service service_name
+
+	after create file add methods for fetch data from backend using model structure. 
+	then this service inject in our required components and invoke methods from service in our component.
+
+	//demo service code
+	import { Injectable } from '@angular/core';
+	import { Http } from '@angular/http';
+
+	@Injectable({ 
+	  providedIn: 'root',
+	})
+	export class DemoService{
+	  constructor(private http: Http){
+	  }
+
+	  fetchAll(){
+		return this.http.get('https://api.github.com/repositories');
+	  }
+	}
+
+
+What is,  providedIn: 'root'  in @Injectable decorator of services ?
+
+	providedIn: 'root' is the easiest and most efficient way to provide services since Angular 6:
+	The service will be available application wide as a singleton with no need to add it to a module's providers array (like Angular <= 5).
+	If the service is only used within a lazy loaded module it will be lazy loaded with that module
+	If it is never used it will not be contained in the build (tree shaked).
+	Btw:
+	If you don't want a application-wide singleton use the provider's array of a component instead.
+	If you want to limit the scope so no other developer will ever use your service outside of a particular module, 
+	use the providers array of NgModule instead.
+	
+	@Injectable({
+	  providedIn: 'root',
+	})
+	export class UserService {
+	}
+
+	@Injectable({
+	  providedIn: UserModule,
+	})
+	export class UserService {
+	}
+	
+	**Important :  We can provide componet level service, but this will create separate instance for each component.
+		unless you have strong reason to do so, it is not recomended.
+		
+	@Component({
+		provider : [],  ==>> imp
+		selector : 'app-selector-name',
+		templeUrl : './pathToTemplae',
+		styleUrls : ['./pathTocss']
+	})
+
+14.explain data binding categories
+	1. source to view
+	{{expression}} 
+	[target] = "expression"
+	bind-target = "expression"
+	
+	2. view to source
+	(target)="statement"
+	on-target="statement"
+
+	3. view to source- source to view
+	[(target)]="expression"
+	bindon-Target = "expression"
+
+15. explain viewchild and viewchildren?
+	If you want to get a Child Component, Directive or DOM element, You can use ViewChild decorator.
+	@ViewChild() – It returns first element that matches selector.
+	@ViewChildren() – It returns all element that matches selector.
+
+16. What is View Child and Content Child in Angular?
+	ViewChild and ContentChild are decorators that are used to communicate between Components in Angular.
+	Any Directive, Components or Element which is part of template is ViewChild. We use ViewChild or ViewChildern decorator to access ViewChild.
+	Any Component or Element which is projected in the template is ContentChild. We use <ng-content> to create ContentChild and 
+	we can access these by ContentChild or ContentChildren Decorator.
+
+      ViewChild example
+
+ 	//app.component.ts file
+ 	@ViewChild(ToDoComponent) todoViewChild: ToDoComponent;
+ 
+    	ngAfterViewInit() {
+        	console.log(this.todoViewChild);
+    	}
+
+	//app.component.html file
+	<div>
+		<app-todo></app-todo>
+	</div>   
+
+
+	ContentChild example
+
+	// Create Add Component
+	@Component({
+	  selector: 'app-add',
+	  template: `
+	  <div>
+	  <ng-content></ng-content>
+	  </div>
+	  `
+	})
+
+	//Create Add Container Component File
+
+	@Component({
+	  selector: 'app-add-container',
+	  template: `
+	  <div>
+	  <app-add>
+		<h1>This is first advertisement.</h1>
+	  </app-add>
+	  </div>
+	  `
+	})
+
+	export class AddContainerComponent implements AfterContentInit {
+	  @ContentChild(AddComponent) addComponnetContentChild: AddComponent;
+	  ngAfterContentInit() {
+		  console.log(this.addComponnetContentChild);
+	  }
+	}   
+
+Q 17. What is ng-container, ng-template and ng-content in Angular, Explain with an example?
+
+	ng-container :
+		ng-container serves as a container for elements 
+		which can also accept structural directives but is not rendered to the DOM.
+		ng-container is an extremely simple directive that allows you to group elements in a template 
+		that doesn’t interfere with styles or layout because Angular doesn’t put it in the DOM
+		This is helpful if you don’t want any extra div on DOM, you can simply use
+		ng-container. 
+		
+		For eg: If there are two structural directives are being called on one div as below:
+
+		<div *ngIf="details" *ngFor="let info of details">
+		  {{ info.content }}
+		</div>
+		Attempting to compile this code will result in the following error:
+
+		Can't have multiple template bindings on one element. Use only one attribute prefixed with *
+		One workaround would be to separate the bindings as below:
+
+		<div *ngIf="details">
+		  <div *ngFor="let info of details">
+			{{ info.content }}
+		  </div>
+		</div>
+
+		Or we can use <ng-container> without adding any extra element to the DOM at runtime:
+
+		<ng-container *ngIf="details">
+		  <div *ngFor="let info of details">
+			{{ info.content }}
+		  </div>
+		</ng-container>
+
+
+	ng-template
+		ng-template allows you to create template content that is not rendered until you specifically (conditionally or directly) add it to the DOM.
+		As the name suggests the <ng-template> is a template element that Angular uses with structural directives 
+		( *ngIf , *ngFor , [ngSwitch] and custom directives). 
+		These template elements only work in the presence of structural directives, 
+		which help us to define a template that doesn’t render anything by itself, but conditionally renders them to the DOM. 
+		It helps us create dynamic templates that can be customized and configured.
+
+		<div> 
+			Ng-template Content 
+			<div *ngIf=”false else showNgTemplateContent”> 
+					Shouldn't be displayed 
+			</div>
+		</div>
+	 
+		<ng-template #showNgTemplateContent> 
+			Should be displayed
+		</ng-template>
+
+		In the above example, If the condition is false then we will show the text as “Shouldn't be displayed” 
+		else will show ng-template content as “Should be displayed”
+
+
+	ng-content
+		ng-content is used to project content into Angular components. 
+		You use the <ng-content></ng-content> tag as a placeholder for that dynamic content, 
+		then when the template is parsed Angular will replace that placeholder tag with your content.
+
+		For example, you have two components as parent and child component
+		and want to show some data in the child component from the parent component
+
+		In parent.component.html <app-child> selector is used to show data of child component
+
+		<app-child>
+		  <div> Child Component Details </div>
+		</app-child>
+
+		If you check on your browser 
+		<div>Child Component Details</div> inside
+
+		<app-child></app-child> 
+		would not be visible. 
+		What if we want to show this content? 
+		So this is where the ng-content directive comes into the picture. 
+		What we need to do is, just add “ng-content” inside the component template and 
+		it will find the content inside the directive tag and add it to that template 
+		at that particular place where we added the “ng-content” tag.
+
+		So instead of div, you do something similar with Angular components except 
+		if you tell Angular where to display it in the parent template using ng-content.
+
+		In child.component.html:
+
+		<h1>Child Info</h1>
+		<ng-content></ng-content>
+
+		Now go to your browser again, you are able to see this: <div>Child Component Details</div>
+
+		<ng-content> accepts a select attribute, 
+		which allows us to sort of name our slot, to be more specific, 
+		it allows us to define the selector of our slot. 
+		It means “Replace me only if the element has card-body attribute”. 
+		Then, we change our app component view to include the card-body attribute.
+
+		For example: In child.component.html:
+		<h1>Child Info</h1>
+		<ng-content select="[input], [form-field]"></ng-content>
+		
+		In parent.component.html:
+		<app-child>
+		  <h1 input>Content1!</h3>
+		  <h2 form-field>Content2!</h2>
+		  <h3 input form-field>Content1 & Content2!</h1>
+		</app-child>
+
+		If you check your browser, 
+		all the heading tags will be visible from child component with the help of <ng-content>.
+
+		To sum up, ng-content is used to display children in a template, 
+		ng-container is used as a non-rendered container to avoid having to add extra  span or a div, and 
+		ng-template allows you to group some content that is not rendered directly but can be used in other places of your template or you code.
+
+Q 18. What are filters/pipe in Angular? Name a few of them.
+	Filters are used to format an expression and present it to the user. 
+	They can be used in view templates, controllers, or services. Some inbuilt filters are as follows. 
+	date - Format a date to a specified format.
+	filter - Select a subset of items from an array.
+	Json - Format an object to a JSON string.
+	limitTo -  Limits an array/string, into a specified number of elements/characters.
+	lowercase - Format a string to lowercase.
+	uppercase- Format a string to uppercase.
+
+Q 19. What are Pipes in Angular? 
+	Pipes are simple functions designed to accept an input value, process, and return as an output, 
+	a transformed value in a more technical understanding. Angular supports several built-in pipes. 
+	However, you can also create custom pipes.
+
+Q 20. What is the PipeTransform interface?
+	As the name suggests, the interface receives an input value and transforms it into the desired format with a transform() method. 
+	It is typically used to implement custom pipes.
+
+	import { Pipe, PipeTransform } from '@angular/core';
+
+	@Pipe({
+	  name: 'demopipe'
+	})
+	export class DemopipePipe implements PipeTransform {
+
+	  transform(value: unknown, ...args: unknown[]): unknown {
+		return null;
+	  }
+	}
+
+Q 21. What are Pure Pipes? 
+	These pipes are pipes that use pure functions. 
+	As a result of this, a pure pipe doesn't use any internal state, and the output remains the same as long as the parameters passed stay the same. 
+	Angular calls the pipe only when it detects a change in the parameters being passed. 
+	A single instance of the pure pipe is used throughout all components.
+
+Q 22. What are Impure Pipes?
+	For every change detection cycle in Angular, an impure pipe is called regardless of the change in the input fields. 
+	Multiple pipe instances are created for these pipes. 
+	Inputs passed to these pipes can be mutable. 
+	By default, all pipes are pure. However, you can specify impure pipes using the pure property, as shown below.
+	@Pipe({
+	  name: 'demopipe',
+	  pure : true/false 
+	})
+
+Q  Start flow of angular
+	angular.json -> (main:"main.ts") => main.ts ->(platformBrowserDynamic().bootstrapModule(AppModule))
+	=> App.Module -> ( bootstrap: [AppComponent]) => AppComponent ( selector: 'app-root',) 
+	=> main.html
+
+Q 24. Explain all files and configurations files in angular ?
+	package.json: This is npm configuration file. It includes details about your website's package dependencies along with 
+	details about your own website being a package itself.
+
+	package-lock.json : This is an auto-generated and modified file that gets updated whenever 
+	npm does an operation related to node_modules or package.json
+
+	angular.json: It is very important configuration file related to your angular application. 
+	It defines the structure of your app and includes any settings associated with your application. 
+	Here, you can specify environments on this file (development, production). 
+	This is the file where we add Bootstrap file to work with Angular 7+.
+
+	.gitignore: This file is related to the source control git.
+
+	.editorconfig: This is a simple file which is used to maintain consistency in 
+	code editors to organize some basics such as indentation and whitespaces.
+
+	assets folder: This folder is a placeholder for resource files which are used in 
+	the application such as images, locales, translations etc.
+
+	environments folder: The environments folder is used to hold the environment configuration 
+	constants that help when building the angular application. 
+	The constants are defined in 2 separate .ts files (environment.ts and environment.prod.ts),
+	 where these constants are used within the angular.json file by the Angular CLI. For example, 
+	if you run the ng build command, it will build the application using the development environment settings, 
+	whereas the command ng build --prod will build the project using the production environment settings.
+
+	browserlist: This file is used by autoprefixer that adjusts the CSS to support a list of defined browsers.
+
+	favicon.ico: This file specifies a small icon that appears next to the browser tab of a website.
+
+	index.html: This is the entry file which holds the high level container for the angular application.
+
+	karma.config.js: This file specifies the config file for the Karma Test Runner, 
+	Karma has been developed by the AngularJS team which can run tests for both AngularJS and Angular 2+
+
+	main.ts: As defined in angular.json file, this is the main ts file that will first run. 
+	This file bootstraps (starts) the AppModule from app.module.ts , and it can be used to define global configurations.
+
+	polyfills.ts: This file is a set of code that can be used to provide compatibility support for older browsers. 
+	Angular 7 code is written mainly in ES6+ language specifications which is getting more adopted in front-end development, 
+	so since not all browsers support the full ES6+ specifications, pollyfills can be used to cover whatever feature missing from a given browser.
+
+	styles.css:/ This is a global css file which is used by the angular application.
+
+	tests.ts: This is the main test file that the Angular CLI command ng test will 
+	use to traverse all the unit tests within the application and run them.
+
+	tsconfig.json: This is a typescript compiler configuration file.
+				-How do you specify angular template compiler options?
+					options are specified as members of the angularCompilerOptions object in the tsconfig.json file.
+					{
+					  "compilerOptions": {
+						"experimentalDecorators": true,
+					  },
+					  "angularCompilerOptions": {
+						"fullTemplateTypeCheck": true,
+						"preserveWhitespaces": true,
+					  }
+					}
+					
+				-fullTemplateTypeCheck : You can enable binding expression validation explicitly by adding the compiler option 
+					fullTemplateTypeCheck in the "angularCompilerOptions" of the project's tsconfig.json.
+				
+	tsconfig.app.json: This is used to override the tsconfig.json file with app specific configurations.
+
+	tsconfig.spec.json: This overrides the tsconfig.json file with app specific unit test configurations.
+
+
+Q 25. Routes : Topic => 
+	canLoad => Lazy loading, loading module on demand
+	canActivate => AuthGuard
+	
+Q 25. @HostBinding and @HostLister	
+		See below example of custom directive:
+		
+		import { Directive, HostBinding, HostListener } from "@angular/core";
+		@Directive({
+			selector: '[customDirective]'
+		})
+		export class customHoverDirective {
+
+			@HostBinding('style.backgroundColor') bgcolor  = "";
+
+			ngOnInit(){
+				this.bgcolor = "red";
+			}
+
+			@HostListener('mouseenter')
+			onMouseEnter(){
+				this.bgcolor = 'yellow';
+			}
+
+			@HostListener('mouseleave')
+			onMouseLeave(){
+				this.bgcolor = "red";
+			}
+		}
+	
+Q Change Detection Angular?
+	Change detection is the process through which Angular checks to see whether your application state has changed, 
+	and if any DOM needs to be updated. At a high level, 
+	Angular walks your components from top to bottom, looking for changes.	
+	
+	Zone.js is a signaling mechanism that Angular uses to detect when an application state might have changed. 
+	It captures asynchronous operations like setTimeout, network requests, and event listeners. 
+	Angular schedules change detection based on signals from Zone.js
+
+Css:----------------------------------->
+
+	Sass stands for Syntactically Awesome Stylesheet
+		Sass Mixins
+			The @mixin directive lets you create CSS code that is to be reused throughout the website.
+			The @include directive is created to let you use (include) the mixin.
+			
+			Sass @mixin Syntax:
+			@mixin name {
+			  property: value;
+			  property: value;
+			  ...
+			}
+
+			Using a Mixin
+			The @include directive is used to include a mixin.
+
+			Sass @include mixin Syntax:
+
+			selector {
+			  @include mixin-name;
+			}
+
+
+			Ex: 									Using a Mixin
+			@mixin important-text {  				.danger {
+			  color: red;								@include important-text;
+			  font-size: 25px;							background-color: green;
+			  font-weight: bold;					}
+			  border: 1px solid blue;
+			}
+			
+			
+		Sass @extend Directive
+			The @extend directive lets you share a set of CSS properties from one selector to another.
+			.button-basic  {
+			  border: none;
+			  padding: 15px 30px;
+			  text-align: center;
+			  font-size: 16px;
+			  cursor: pointer;
+			}
+
+			.button-report  {
+			  @extend .button-basic;
+			  background-color: red;
+			}
+
+Css flexbox 
+
+	CSS FLEX :
+		display : flex | inline-flex;
+		
+		flex-direction : row | column;
+		
+		// arrage item one by one row 
+		flex-wrap : wrap | nowrap | wrapreverse;
+		
+		// flex-basis is for to set width (set in parent container)
+		flex-basis : length;
+		
+		// Horizontal alignment (X-axis) items
+		justify-content : flex-start | flex-end | center ;
+		
+		// For Verticle alignment (Y-axis) items
+		align-items :  flex-start | flex-end | center ; 
+
+		align-content :  flex-start | flex-end | center ;
+
+		align-self :  flex-start | flex-end | center ; 
+		
+		flex-grow : <number>;
+		flex-shrink : <number>;
+		flex : <number>; 
+		flex : flex-grow<number> flex-shrink<number> flex-basis<number>
+		order : <number>; => To change order ofitems without changing Html elements. Not recomended to use, coz complex to debug code 
+		
+	CSS GRID :
+		
+		main{
+			display: grid;
+			grid-template-area: "topbar topbar topbar"
+								"ads  content sidebar"
+								"footer footer footer"
+		}
+		header{ grid-area : topbar;}
+		aside { grid-area : ads;}
+		article{ grid-area: content}
+		nav {grid-area: sidebar}
+		footer{grid-area: footer}
+		
+		
+		See : E:\Html5_&_Css3\CSS_GRID.png
+		
+		2 lines GRID track
+		4 lines GRID area
+		
+		see: E:\Angular startup\Playground-2\testingPlayground\src\app\grid.html
+
+What is box model?
+	The CSS box model is essentially a box that wraps around every HTML element. 
+	It consists of: margins, borders, padding, and the actual content.
+
+What is specificity?
+	Think of specificity as a rank that determines which style declaration are ultimately applied to an element.
+	some rule 	1. if name of css class is same then last excecuted class is applied
+				2. if specific class name is given then its applied 
+				3. Element id has most specificity than className
+				4. !important having most specificity than class, Id 
+
+centre div tag =>  transform translate / flex justify content centre. align-items: center
+	1.
+	.parent {
+		height: 200px;
+		background: #CCCCCC;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.child {
+		background-color: #FFFF00;
+		width: 100px;
+		height: 100px;
+	}
+
+	2.
+	.center {
+		position: absolute; 	
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		border: 5px solid #FFFF00;
+		padding: 10px;
+	}
+
+Diff bet display : inline-block and inline
+	=> display: inline-block allows to set a width and height on the element. Also,
+	the top and bottom margins/paddings are respected, but with display: inline they are not.
+
+What's the difference absolute and relative in css
+	By default all HTML elememnts has static position,Static positioned elements are not affected by the top, bottom, left, and right properties.
+	In CSS Once you set Position then you can able to use top, right, bottom, left attributes.
+	An absolute position element is positioned relative to the first parent element that has a position other than static. 
+	A relative positioned element is positioned relative to its normal position.
+
+Difference between static , Relative, Absolute, Fixed position in css ?
+		position: static;
+				HTML elements are positioned static by default.
+				Static positioned elements are not affected by the top, bottom, left, and right properties.
+				An element with position: static; is not positioned in any special way; it is always positioned according to the normal flow of the page:
+
+Shadow DOM :
+	using some javascripit we can create own scope UI elememnts render in browser 
+	ReactJs Uses Shodow dom.
+	
+pseudo class 
+	using single colon(:) its pseudo class
+	:hover
+	:first-child
+	:last-child
+	
+pseudo Element CSS : 
+	using double colon(::) its pseudo elememnts
+	::after
+	::before
+
+What are the different types of Selectors in CSS?
+	Universal Selector: 			* {}
+	Element Type Selector: 			ul {}
+	ID Selector: 					#container {}
+	Class Selector:					.box {}
+	Descendant Combinator:			#container .box {}
+	Child Combinator:				#container > .box {}
+	General Sibling Combinator: 	h2 ~ p {}
+	Adjacent Sibling Combinator:	p + p {}
+	Attribute Selector:				input [type=”text”] {}
+	
+Create a triangle using css ?
+		- Using border top right bottom left we can create
+
+*input type="datetime-local" => sets local time with no timezone information
+
+*Promise has 3 state : Pending, Resolve, Reject
+
+*Grouping tags in html is => div, fieldset
+
+*Text in a <pre> element is displayed in a fixed-width font
+
+*Parameters remains in browser hystory is example of => Get Method	
+
+* var name = "Prashant";
+  console.log(name.substring(4,5)); ==> h
+  
+*which value is falsy = false, 0, 0n, "", null, undefined, NaN
+
+*method to attached one dom node to another => appendChild(), 
+
+*Which statement represents the starting code converted to an Immediately Invoked Function Expression (IIFE)?
+
+	(function(){   |  (()=>{					
+	 //code here   |    //code here
+	})()           |  })()
+
+	construble and callble | not construble
+	having this is own     | not having this
+	
+closure in javascripit => function whith its lexical scope create closure in javascripit;
+
+Specification and Standards:
+	Do use consistent names for all assets named after what they represent.
+	Do use upper camel case for class names.
+	Do match the name of the symbol to the name of the file.
+	Do append the symbol name with the conventional suffix (such as Component, Directive, Module, Pipe, or Service) for a thing of that type.
+	Do give the filename the conventional suffix (such as .component.ts, .directive.ts, .module.ts, .pipe.ts, or .service.ts) for a file of that type.
+
+
+Interview
+
+*ngIf vs hidden property?
+data not loaded / data loaded added hidden property n marked with display none css
+
+viewEncapsulatuon?
+	It is behaviour of in angular in which components css styles encapsulated into component view.
+	Types:
+		Encapsulate -- by default
+		None
+		ShadowDom
+
+INDEXOF()
+	The indexOf() method returns the position of the first occurrence of a value in a string.
+	The indexOf() method returns -1 if the value is not found.
+	The indexOf() method is case sensitive.
+	Syntax:
+	string.indexOf(searchvalue: string:required, start: number,optional)
+_______________________________
+
+*typrOf()
+In JavaScript there are 5 different data types that can contain values:
+string,number,boolean,object,function
+
+Mindtree 
+Difference HTML properties and attributes:
+	The Attributes are defined by HTML whereas the properties are defined by the DOM. 
+	The attribute's main role is to initializes the DOM properties. So, once the DOM initialization complete, the attributes job is done. 
+	Property values can change, whereas the attribute values can never be changed.
+	
+	Let's first look at the definitions of these words before evaluating what the difference is in HTML:
+	English definition:
+		Attributes are referring to additional information of an object.
+		Properties are describing the characteristics of an object.
+
+	In HTML context:
+	When the browser parses the HTML, it creates a tree data structure wich basically is an in memory representation of the HTML. 
+	It the tree data structure contains nodes which are HTML elements and text. 
+	
+	Attributes and properties relate to this is the following manner:
+	Attributes are additional information which we can put in the HTML to initialize certain DOM properties.
+	Properties are formed when the browser parses the HTML and generates the DOM. 
+	Each of the elements in the DOM have their own set of properties which are all set by the browser. 
+	Some of these properties can have their initial value set by HTML attributes. 
+	Whenever a DOM property changes which has influence on the rendered page, the page will be immediately re rendered
+
+Event bubbling in JavaScript?
+	Read Link : https://www.javatpoint.com/event-bubbling-and-capturing-in-javascript
+	Event bubbling is a way of event propagation in the HTML DOM API, 
+	when an event occurs in an element inside another element, and both elements have registered a handle for that event. 
+	With bubbling, the event is first captured and handled by the innermost element and then propagated to outer elements. 
+	The execution starts from that event and goes to its parent element. 
+	Then the execution passes to its parent element and so on till the body element.
+	
+	event.stopPropagation () used to stop event bubbling
+	Note: The event.stopPropagation() method stops the move upwards bubbling (on one event only), 
+	but all the other handlers still run on the current element.
+	
+Event Propogation
+Event loop
+!Doctype =>  It is an "information" to the browser about what document type to expect.
+
+Create card and arrage in a row ?
+	.parent {
+	  display: flex;
+	  width: 100%;
+	  flex-wrap: wrap;
+	}
+
+	.card {
+	  width: 200px;
+	  height: 100px;
+	  border: 1px solid grey;
+	  border-radius: 5px;
+	  margin: 10px;
+	}
+
+What if we remove !doctype from html page?
+	The absence of the DOCTYPE or its incorrect usage will force the browser to switch to quirks mode. 
+	It means that the browser will do its best to layout the page that is considered to be old or created against web standards.
+
+Html element and tag
+	HTML tags are used to hold the HTML element.	HTML element holds the content.
+	HTML tag starts with < and ends with >			Whatever written within a HTML tag are HTML elements.
+	Technically, an HTML element is the collection of start tag, its attributes, an end tag and everything in between. 
+	On the other hand an HTML tag (either opening or closing) is used to mark the start or end of an element,
+	
+	HTML tag is just opening or closing entity. For example:
+	<p> and </p> are called HTML tags
+	HTML element encompasses opening tag, closing tag, content (optional for content-less tags) Eg:
+	<p>This is the content</p> : This complete thing is called a HTML element
+
+Event loopin javascripit
+	JavaScript has a runtime model based on an event loop, which is responsible for executing the code, 
+	collecting and processing events, and executing queued sub-tasks. 
+	This model is quite different from models in other languages like C and Java.
+	It means that the main thread where JavaScript code is run, 
+	runs in one line at a time manner and there is no possibility of running code in parallel.
+
+
+Auxillary routes in angular routing ?
+	Angular supports the concept of auxiliary routes, which allow you to set up and navigate multiple independent routes in a single app. 
+	Auxiliary routes allow the user to access or toggle portions of the page, such as a side-bar or dialog, using the URL.
+	Each auxiliary route is an independent route which can have:
+		its own child routes
+		its own auxiliary routes
+		its own route-params
+		its own history stack 	
+		
+      <a [routerLink]="[{ outlets: { 'sidebar': ['component-aux'] } }]">Component Aux</a>
+	  <div>
+		  <router-outlet name="sidebar"></router-outlet>
+	  </div>
+
+What are router events?
+	During each navigation, the Router emits navigation events through the Router.events property allowing you to track the lifecycle of the route.
+	The sequence of router events is as below,
+	1.NavigationStart,
+	2.RouteConfigLoadStart,
+	3.RouteConfigLoadEnd,
+	4.RoutesRecognized,
+	5.GuardsCheckStart,
+	6.ChildActivationStart,
+	7.ActivationStart,
+	8.GuardsCheckEnd,
+	9.ResolveStart,
+	10.ResolveEnd,
+	11.ActivationEnd
+	12.ChildActivationEnd
+	13.NavigationEnd,
+	14.NavigationCancel,
+	15.NavigationError
+	16.Scroll
+	
+What is activated route?
+	ActivatedRoute contains the information about a route associated with a component loaded in an outlet.
+	@Component({...})
+	class MyComponent {
+	  constructor(route: ActivatedRoute) {
+		const id: Observable<string> = route.params.pipe(map(p => p.id));
+		const url: Observable<string> = route.url.pipe(map(segments => segments.join('')));
+		// route.data includes both `data` and `resolve`
+		const user = route.data.pipe(map(d => d.user));
+	  }
+	}
+
+What is the purpose of Wildcard route?
+	{ path: '**', component: PageNotFoundComponent }
+
+
+@View Child static true/false
+	(source explanation: https://tutorialsforangular.com/2021/06/20/what-does-the-static-property-on-viewchild-do/)
+
+	Static stands for whether the ViewChild is “static” content e.g. 
+	Always available on the page, no matter page bindings, API calls, ngIfs etc. 
+	When set to true, we are telling Angular that the ViewChild will be available at anytime, 
+	so simply query for the ChildComponent at the earliest lifecycle hook available and then never query again.
+	
+	However, if we set static to false, we are saying that the ViewChild will be available at a later time, 
+	but it’s dependant on a condition (Such as an API call, or a simple component property binding), 
+	and therefore we must check for the ViewChild every time ChangeDetection runs. 
+	Understandably, this can create a higher performance load because we must always be checking if 
+	our ChildComponent is available any time the component changes.
+
+	when we set static to true, Angular only tries to find our ViewChild *once*, and only once. 
+	If our ViewChild is not available in the DOM when Angular checks, it is never queries for again. 
+	Even in this case where shouldShow is a constant value, 
+	ChangeDetection does not run until later in the component lifecycle – after Angular tries to fetch a ViewChild initially.
+	Because ngAfterViewInit runs after the first ChangeDetection cycle, our component is available, 
+	and because setting static to false means after every ChangeDetection, we re-query, we are able to find our ChildComponent.
+
+	I want to use this example because it shows it’s not about Lifecycle Hooks at all. It’s just that some people boil it down to something like :
+
+	Static = true. Access in ngOnInit
+	Static = false. Access in ngAfterViewInit
+	And the reality is it’s actually got nothing to do with that. It’s about ChangeDetection. 
+	In our above example, both the logs from ngOnInit *and* ngAfterViewInit will be false, 
+	however when our timer goes off, and we set shouldShow to true, and then 500ms later we check the ChildComponent, it will be available.
+
+	Which One To Use?
+	The rules for which one to use is actually quite simple.
+
+	If your ChildComponent is hidden or dynamically loaded in some way via component binding (
+	Either with property binding or an API call), then you *must* set static to false.
+	If your ChildComponent is always available on the page, and is never hidden. Then you can use *either* static false or static true. 
+	But setting static to true is more performant, and gives you earlier access to the component (if required).
+
+
+Study :
+	semantic and non semantic
+		semantic elememnts clearly describes its meaning and content to both browser and developer
+			ex : form, table, article, header, footer
+			
+		non-semantic
+			Tells nothing about its content
+			ex : div, span
+	
+	find and filter method
+		The find() method returns the first value that matches from the collection. Once it matches the value in findings, 
+		it will not check the remaining values in the array collection. 
+		The filter() method returns the matched values in an array from the collection.
+	
+	aside and article 
+		The <aside> HTML element represents a portion of a document whose content is only indirectly related to the document's main content. 
+		Asides are frequently presented as sidebars or call-out boxes.
+		
+		The <article> HTML element represents a self-contained composition in a document, page, application, or site, 
+		which is intended to be independently distributable or reusable (e.g., in syndication). 
+		Examples include: a forum post, a magazine or newspaper article, 
+		or a blog entry, a product card, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.
+		
+	img and figure
+		The image tag is used to embed the image in an HTML document whereas 
+		the figure tag is used to semantically organize the content of an image in the HTML document. 
+		It is critical to note that these two elements are not interchangeable.
+	
+	
+	responsive and adoptive
+	flex and grid
+	selector class
+	pseudo and non pseudo class
+	
+
+JavaScript Coding  : 
+	Higher order methods : 
+	
+	Solve coding question
+	https://www.fullstack.cafe/interview-questions/javascript
+	
+Summary : 
+* What is two way data binding?
+* What is DI and how angular handling DI?
+* What is lazy loading and how can we achieve this?
+* What is content Projection?
+* What are observables and promises which one to use in angular?
+* How do u transfer the data between components?
+* What is ng-content?
+* What is the usagle of ngOnChanges lifecycle hooks?
+* What is the difference between constructor and ngOnInit?
+* Can we write a class in angular without using a constructor?
+* What is difference between attribute and structural directives?
+* Which module we use in our module to use ngIf or ngFor?  -  { CommonModue } from '@angular/comman'
+* What are the angular provided modules we use in our app?
+* What is the difference between form builder and form control?
+* Let suppose we have a text field and that is name, and we have to setup a validation to accept only 5 chars so how can we achieve this by template driven forms. If we want to show the error message then how can we do it.
+* How do you set the value of form control in ts file?
+* Suppose we have an API url so how can we use it to get the data?
+* What is the use of httpInterceptor Class?
+* Which method of httpClient u will use to get the data?
+* If we get the response from the API and want to filter the result what would be another function from angular we have rather that forEach?
+* Have you used rxjs operator in your application?
+* Let suppose we have three API urls as per first response, we need to call second and as per second response we need to call third API. if there would we error then on third api call we need to show the error, what would be the best approach for this. Can we use rxjs operator in this issue?
+* What is the difference between template driven form and reactive based approach?
+* What is router outlet.
+* What is the difference between forChild and forRoot?
+* What is pathMatch in route?
+* What are the guards? And what is canLoad guard?
+* Have u written test cases in angular?
+How can we deploy our web app?
+What is PWA? Web Push Notifications | Service Worker
+How can we use authentication in Routes?
+What are the pipes and how can create custom pipes?
+How can we use common css files for multiple components?
+
+Usefull links to read angular-interview-questions
+https://github.com/sudheerj/angular-interview-questions#how-do-you-specify-angular-template-compiler-options
+https://www.interviewbit.com/angular-interview-questions/
