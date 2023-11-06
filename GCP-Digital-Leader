@@ -1,0 +1,52 @@
+GCP Digital Leader Certifications: 
+
+Zones : Geo locations
+Region : Sub part of Zones.
+
+Google Compute engine: 
+    - virtual machine, create a debian os vm start as following steps.
+    - Ex to run compute engine: debian default vm
+        sudo su
+        apt update 
+        apt install apache2
+        ls /var/www/html
+        echo "Hello World!"
+        echo "Hello World!" > /var/www/html/index.html
+        echo $(hostname)
+        echo $(hostname -i)
+        echo "Hello World from $(hostname)"
+        echo "Hello World from $(hostname) $(hostname -i)"
+        echo "Hello world from $(hostname) $(hostname -i)" > /var/www/html/index.html
+        sudo service apache2 start
+
+IP Address of virual machine           -                   Description
+
+    Internal IP address                         Permanent Internal IP, does not change during 
+                                                lifetime of instance. Internal permannent IP of VM
+
+    External / Ephemeral IP address             Ephemeral/External IP Address that changes when
+                                                Instance is stopped. used communicate externally.
+
+    Static external IP Address                  Permanent external IP addr that can be attached to VM
+                                                We can make external IP to not change when vm stops.
+                                                Search :  Reserve a static address
+
+Simplify VM HTTP Server setup:
+    Options to do that:
+        Startup Script : 
+        Instance Temaplte :
+
+        Custom Image : 
+            Installing OS patches and sodtwares at launch of instance increase boot up time.
+            So in GCP we can create custom custom image with OS patches and soft preinstall
+            Custom image can be created from instance, hdd, a snapshot, another image, or cloud storage
+            Can be shared across project
+            Deprecate old image and can specify new image. --Recommended
+            Hardning an image - customize image with your corporate security standard --Recommended
+    #!/bin/bash
+    apt update 
+    apt -y install apache2
+    echo "Hello world from $(hostname) $(hostname -I)" > /var/www/html/index.html
+
+
+
