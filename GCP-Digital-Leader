@@ -1,8 +1,6 @@
 GCP Digital Leader Certifications: 
-
 Zones : Geo locations
 Region : Sub part of Zones.
-
 Google Compute engine: 
     - virtual machine, create a debian os vm start as following steps.
     - Ex to run compute engine: debian default vm
@@ -18,24 +16,18 @@ Google Compute engine:
         echo "Hello World from $(hostname) $(hostname -i)"
         echo "Hello world from $(hostname) $(hostname -i)" > /var/www/html/index.html
         sudo service apache2 start
-
 IP Address of virual machine           -                   Description
-
     Internal IP address                         Permanent Internal IP, does not change during 
                                                 lifetime of instance. Internal permannent IP of VM
-
     External / Ephemeral IP address             Ephemeral/External IP Address that changes when
                                                 Instance is stopped. used communicate externally.
-
     Static external IP Address                  Permanent external IP addr that can be attached to VM
                                                 We can make external IP to not change when vm stops.
                                                 Search :  Reserve a static address
-
 Simplify VM HTTP Server setup:
     Options to do that:
         Startup Script : 
         Instance Temaplte :
-
         Custom Image : 
             Installing OS patches and sodtwares at launch of instance increase boot up time.
             So in GCP we can create custom custom image with OS patches and soft preinstall
@@ -47,6 +39,354 @@ Simplify VM HTTP Server setup:
     apt update 
     apt -y install apache2
     echo "Hello world from $(hostname) $(hostname -I)" > /var/www/html/index.html
+[5:22 PM] Prashant Giri
+GCP Discounts :
+	- Sustain usage cost
+	- only compute machine created by Google Kubernetes Engine (GKE)
+	is elligible for discounts.
+	Committed Use discounts : 
+		- For workload with predictable resource need, commit for 1year or 3years
+		- Upto 70 % discounts based on machine type and GPUs.
+		- (Remember) You can not cancel commitments
+		- You can reach out cloud supports if you mistake by selection wrong commits
+Preemptible VM:
+	- Short lived cheaper upto 80% compute instance.
+	- Can be stopped by GCP anytime (preempted) within 24 hour.
+	- instance get 30 sec warning (to save anything if imp)
+	Use Preempt VM if :
+		- Your app is fault tolerant.
+		- You are very cost sensitive.
+		- Your workload s not immidiate.
+		Ex: Non immidiate batch processing.
+	Restriction :
+		- Not always available
+		- NO SLA and can not migrated to regular VM's.
+		- No Automatic restart.
+		- Free tiar credit not applicable.
+	Steps to create Preemptible: VM Instances (Sidebar) -> create (button) -> Preemptbility (dropdown) -> On  
+Spot VMs:
+	- Similar to Preemptible VMs only diff is Does not have maximum runtime of 24hours.
+	- Dynamic pricing 60-90%, Free tier credit not applicable.
+Compute Engine - Sole tenant nodes:
+	*Shared tenancy - by default, single tenant machine can have instances multiple customers.
+	*Sole Tenant Node - Virtual machine on hardware dedicated to one customer.
+	*Use Cases: 
+		- Security and Compliance requirements : You want your VM's to be physically separated from those in other projects.
+		- High peroformance requirements : Group your VM's togather.
+		- Lisencing requirements: Using pre-core or pre-processor "Bring your own license"
+	**Use Google cloud pricing calculator for estimates.
+	Steps to create Sole-tenant node => 
+		1. Compute Engine (Search bar) => Sole tenant node (sidebar) => Create node group (button) => create node template
+		=> Set Affinity label (key:value small case) => Configure Autoscalling => No of node (set value 1)
+		2. Create VM by selecting sole tenancy add key:IN value.
+		VM Instances => create => Management security, disk, networking, sole tenancy (link text) => 
+		select sole node from link text => Node affinity lables => (set key value pair created in step 1)
+Compute Engine Feature:
+	 Custome machine types:
+		- When predifined VM's not appropriate for your workload.
+		- In Custome machine type allow you to Adjust vCPU's, memory and GPUs, 
+		can choose between E2, N2, or N1 machine types.
+		support wide variety for OS
+		Billed per vCPS's and memory ex: hourly price $0.033174/vCPS + $0.04446 / GB
+	Steps : New VM Instances (sidebar) => Series (E2/N2/N1 select any dropdown) => Machine Type (dropdown) => Custome (option)
+	=> Select vCPS and memory (slider)
+	Google Compute Engine VM cost:
+		- 2 primarily cost to VMs using GCE as
+		1. Infrastucture cost to run VM's 
+		2. Lisencing cost for your OS (Only for premium images)
+			-Premium image ex : Red Hat Enterprise Linux (RHEL), Ubuntu Pro, Windows server.
+			-Options for Lisencing 
+				1. Can use Pay-as-you-go (PAYG) or
+				2. (Within a lot of constraint) Can use existing license (Bring your own subscription BYOS/BYOL)
+			Recommandtion : Use your license if available, after that we can shift to PAYG model.
+INSTANCE GROUP:
+	- To create group of VM instances
+	- Location can be Zonal and Regional
+	- Two types of Instances group
+		1. Managed Instance Group(MIG) - Identical VM's created using a template.
+			Feature: Autoscalling, auto healing and Managed access,
+			maintain number of instances,
+			Detect Application failure using health checks (Self healing)
+			Add load balancer
+			Release new Application version withaout downtime.
+				Rolling updates : Release a new version step by step, update percenatage of version
+				Canary Deployment: Test new version on group of instances before releasing to all instances.
+		2. Unmanged : Different Configuration of VM's in same group.
+			Does not offer auto scalling, auto healing & other services.
+			Not Recommanded, unless you need different kind of VM's
+	*Creating Managed Instance Group (MIG)
+		- Instance template is mandatory
+		- Configure Autoscalling:	
+			> min number of instances
+			> max number of instances
+			-Autoscalling Metrics : 
+				-cool down period : How long to wait before looking for Autoscalling Metrics
+				-Scale in controls: Prevent sudden drop in no of VM instance.
+					ex: dont scale in by more than 10% or 3 instances in 5 min.
+		Autohealing : Configure health check with initial delay.
+	MIG is of two types stateless and statefull.
+		statefull required ex: databases
+		stateless where we want data persistent not regular.
+Cloud Load Balancing:
+	- Distribute traffic across VM instances in one or more region.
+	- Its Managed Service: Google cloud ensures that it is highly available
+		Auto scales to handle huge loads, Load balancer can be public or private.
+	Types:
+		External (HTTP)
+		Internal (HTTP)
+		SSL Proxy
+		TCP Proxy
+		External Network TCP/UDP 
+		Internal TCP/UDP
+Steps to create load balancer:
+	Network services (search) => Load Balancing (Sidebar) => Create Load Balancer
+	=> Options HTTP(S), TCP, UDP => Start Configuration (button) ex HTTP =>  
+	=>Exercise/Practise: Create Template => Create Managed group of instance using template => Attached Load Balancer => Test it from browser.
+	Make sure you 
+		DELETE the Managed Instance Group
+		TERMINATE ALL YOUR VM instances.
+		DELETE the Cloud Load Balancer
+		DELETE the VM Image
+        
+MANAGED SERVICES: Section 4
+---------------------------
+	IAAS, PASS, FAAS, CAAS, Serverless and SAAS in Google cloud platform:
+	IAAS:
+		-Use only Infrastucture from cloud provider. ex: VMs
+		-Our responsibility is : Applicationcode and Runtime, Configuration of loa balancer, 
+		Auto scalling, OS upgrade and patches, Availibility, etc...
+	PAAS:
+		-Use a platform provided by cloud. ex: Elastic BeanStalk, EC2 by aws, App Engine by GCP,
+		-Cloud Provider is responsible for : OS, App runtime, Autoscalling, Availibility, & Load Balancing.
+		-Our responsibility is App Configuration, Application code.
+		Varieties: CAAS, FAAS, Database - Relational, NoSql, Queues, AI, ML, Operation etc...
+	CAAS: Container as a Service
+		- Used in microservices architecture, where we can multiple Deployment of services.
+		- Docker is one of famous Container
+			. Create Docker image for each microservice 
+			. Docker image has all needs of microservice
+				Application Runtime (JDK, Python, NodeJs)
+				Application code depedancies.
+			. It Run same way on any Infrastucture (Solves its working on my local machine prob)
+			. Docker are light weight, cloud neutral, provide isolation as Containers
+		Container Orchestration:
+			In microservice architecture multiple instances needs to manage autoscale, load balanced
+			for that we need Container Orchestration, one of the famous is Kubernetes.
+			Kubernetes: 
+				Feature: 1. Autoscalling, 2. Service Diescovery, 3. Load Balancer, 4. Self healing (Helth check)
+				5. Zero downtime Deployment
+	Serverless:
+		- EX: Lamda function by AWS, Cloud function in GCP.
+		-Serverless does not mean "No Server"
+		-You dont worry about Infrastucture (Zero visibility into Infrastucture)
+			Flexible scalling, and automated high Availibility
+		-Pay for use, ideally ZERO Request = Zero cost
+			only pay for requests not for servers
+		-Focus on code only and the cloud manage services and all.
+	SAAS:
+		-Offer subscription bais pay as you go PAYG model
+		-Ex: Email, Calendaring, office tools (Gmail, outllok, MS office 365)
+		CRM, Enterprise planning softwares
+	Shared responsibility model:
+		-Security is shared responsibility of cloud provider and customer.
+		-Google Cloud always responsible for hardware, networking, audit logging
+		-GCP provides features to make security easy, Encryption at rest by default, IAM, KMS etc
+		-Customer responsibility varies with the model.
+			SaaS = Content + Access Policies + Usage
+			PaaS = Saas + Deployment + Web applicable Security 
+			IaaS = PaaS + Operation + Network Security + Guest OS
+GCP Managed services for Compute:
+---------------------------------
+	Compute Engine 				- IaaS - High peroformance and general purpose VMs that scale globally.
+	Google Kubernetes Engine	- CaaS - Orchestrate containerized microservices on Kubernetes
+										 Need advance cluster Configuration and Monitoring
+	App Engine					- PaaS (CaaS, Serverless) - Build Highly scalable applicable on fully Managed
+								  		 Platform using open and familiar language and tools
+	Cloud function				- FaaS, Serverless -Build event driven Application using, simple purpose function.
+	Cloud Run					- CaaS, Serverless -Develop and deploy high scalable containerized Application
+										Does not need a cluster.
+	Exploring GCP Computing services:
+	APP ENGINE:
+		-Simplest way to deploy and Scale Application, provide end to end application management.
+		-Support Go, Java, .Net, NodeJs, PHP, Python, Ruby using preconfigured runtime.
+		-Use Custome run time and Write code in any language
+		-Connect to variety of Google cloud storage products (Cloud Sql etc)
+		- NO usage charges, Pay for resource provisioned.
+		Features : Aumatic load Balancing, Auto Scalling, Managed platform update, 
+			Application health Monitoring, Application versioning, Traffic splitting
+	Compute Engine                            Vs                     App Engine
+	IAAS 															PaaS, Serverless
+	More Flexibility												Lower Flexibility (like can not change GPU, CPU)
+	More responsibility												Lower responsibility
+		- choosing image (OS)
+		- Installing softwares
+		- Choosing hardware
+		- File grained access/ Permission, firewall
+		- Availibility
+	App Engine Environments:
+		Standard:
+			-V1: Java, Python, PHP, Go  - (Old version)
+			-V2: Java, Python, PHP, Go, NodeJs, Ruby - (New version)
+			- Complete isolation from OS/disk
+			- Support Scale down to zero Instances
+		Flexible:
+			-Make use of compute engine	VM's
+			-Support any Runtime (with build in support for Python, Java, Node.js, Go, Ruby,PHP, .Net)
+			-CANNOT scale down to zero instance.
+	Exercise Video 47 - demo of AppEngine
+			 - commands
+			 - gcloud app deploy
+			 - gcloud app deploy --version v2
+			 - gcloud app browse --version v1  => Can access older version also
+	Google Kubernetes Engine (GKE):
+	-------------------------------
+		-Most popular open source container Orchestration Service.
+		-Provides cluster management(Including Upgrades)
+		-Provide all imp container Orchestration features
+			-Auto Scalling
+			-Service Discovery
+			-Load balancer
+			-Self healing
+			-Zero downtime deployment
+		-Minimize Operation with auto-repair (repair failed node)
+		 auto upgrade (use latest version of K8S always)
+		-Provides Pods and cluster Autoscalling
+		-Enable cloud logging and Monitoring with simple Configuration
+		-Use container optimized OS, or hardened OS built by Google.
+		-Provide support of persistent disk and ssd.
+	**Video 51 GKE Practise.
+		2 modes creating cluster 
+		 Standard: You are responsible for managing cluster
+		 Auto Pilot: -GKE will manage cluster for us.
+			-Reduce your Operational cost by running Kubernetes cluster
+			-Do Not worry about managing cluster nodes, pods
+	**Here are some of the commands we will run in the next few steps:
+		gcloud config set project my-kubernetes-project-304910
+		gcloud container clusters get-credentials my-cluster --zone us-central1-c --project my-kubernetes-project-304910
+		-Kubernetes create and expose deployment:
+			kubectl create deployment hello-world-rest-api --image=in28min/hello-world-rest-api:0.0.1.RELEASE
+			kubectl get deployment
+			kubectl expose deployment hello-world-rest-api --type=LoadBalancer --port=8080
+			kubectl get services
+			kubectl get services --watch
+			curl [External IP]:8080/hello-world
+		-Increase number of instance of microservice:
+			kubectl scale deployment hello-world-rest-api --replicas=3
+		-Increase no of nodes in your kubernetes cluster:	
+			gcloud container clusters resize my-cluster --node-pool default-pool --num-nodes=2 --zone=us-central1-c
+			This is manual scalling to avoid this use autoscalling as follows
+		-Autoscalling by cpu percenatage
+			kubectl autoscale deployment hello-world-rest-api --max=4 --cpu-percent=70
+			-this autoscalling also known as horizontal pod autoscalling (HTP)
+			kubectl get hpa
+		-Setup auto-scalling for your kubernetes cluster
+			gcloud container cluster update cluster-name --enable-autoscalling --min-nodes=1 --max-nodes=2
+		watch curl [http link ex:http://34.184.201.200:8080/hello-world]  --> to see microservice deployment
+		kubectl get deployment --> to see project deployed
+		kubectl get pods       --> to see instances
+		-Delete Microservice
+			Delete service -kubectl delete service
+			Delete deployment-kubectl delete deployment
+		-Delete Deployment
+			gcloud projects list                      -----> See project details, Id
+			gcloud config set project [project-id]	  -----> Set Project 
+			gcloud container cluster delete	[cluster-name]	--zone [zone-name]	  -----> this command will delete cluster
+	Cloud Function:
+	---------------
+		Imagine you want to execute some code when any event happens like
+			-A file uploaded in cloud storage, -An error log is wriiten in cloud loggings
+			-A message arrives in clous pub-sub
+		Enter Cloud Functions
+			-Run code in response to event
+			-Pay only for what you use => No of invocations, Compute time of invocations, Amount of CPU and Memory utilisation.
+		Time Bound - default 1min and max 9min (540sec) for first gen option
+		Need "Cloud build API" enabled to deploy cloud function
+		**Video 58 create first Google cloud function
+	Cloud Run & Cloud Run for Anthos:
+	---------------------------------
+		- Cloud Run - "Container to production in seconds"
+		- Build on top of an open standard - Knative
+		- Fully managed severless platform for containerized application
+		- Zero Infrastucture management
+		- Pay per use (For memory, CPU, Request and networking)
+		- Fully integrated end-to-end developer experience
+		- No limitations in languages, binaries and depedancies
+		- easly portable because of container based architecture
+		- Cloud code, Cloud build, Cloud Monitoring, & Cloud logging
+		- ANTHOS = Run kubernetes cluster anywhere.
+		- Cloud Run for Anthos = Deploy your workload to Anthos cluster running on On-Premises on Google Cloud.
+		- Search cloud run => select "hello" service (sample provided by GCP) => set service name 
+		=> region (once service name and region set then we can not change it)
+		=> Set CPU allocation and pricing => set autoscalling
+Block, File and Object storage in GCP:
+--------------------------------------
+	Block Storage:
+		-Use Case : Harddisc Attached to your computer.
+		-Typically, One block storage device can be connected to ONE virtul server
+			Exception: You can attched read only block devices with multiple virtual server
+			and certain cloud provider are exploring multi writter dics aswell!!
+		-However, you can connect multiple different block storage device to one virtual server.
+		Used As: 
+			Direct Attached storage :(DAS) - Similar to a hard driven
+			Storage Area Network (SAN) :High speed network connecting a pool of storage devices
+										SAN used by oracle, microsoft sql server
+		GCP provide : 
+			Persistent Disk : N/w block storage
+			Local SSD's : Local storage block
+	File Storage:
+		- GCP - Filestore.
+		-Media workflow need huge shared storage
+		-Enterprise user need a quick way to share file
+		-These files shared by several virtual server
+	Object Storage: 
+		- "Cloud storage" on GCP
+		- Most popular, very flexible, & inexpensive storage service.
+		- Serverless Autoscalling and infinite scale.
+		- Can store in key value manner
+		- Treat entire unit as single object
+		- Provide Rest API to access and modify the object.
+		- provide CLI called "gsutils"
+		- Stores all files: text, binary, backups and archive, media files
+	Cloud Storage - Storage Class - Introduction:
+		- Storage class help you to optimized cost based on your access needs.
+		- Design for durability 99.9999999999 (11 9's)
+		- Types
+			- Standard :  Frequentyly used                    min storage duration : none
+			- Nearline :  Read/modify once a month            min storage duration : 30days
+			- Coldline :  Read/modify at most once a quater   min storage duration : 90days
+			- Archive  :  Read/modify less that once a year   min storage duration : 365days
+	Object lifecycle management:
+		-Files are frquently accessed when they are created
+		-
+	Transferring data on prepmises to cloud:
+		There is two option
+		1. Online Transfer : Recommanded when data is less than 1TB.
+		2. Storage transfer service: Recommanded for large scale(petabytes)
+			online data transfer from data center, aws, azure, gcp
+			can setup a repeatating schedule.
+		3. Transfer Applience: Copy, ship and upload data.
+			Recommanded when data size more than 20TB
+			or online transfer take > 1 week.
+			Process : 
+				-Request and Applience
+				-Upload your data
+				-Ship the applience back
+				-Google upload data
+			Fast Copy upto 40Gbps
+			AES - Encryption 256 - customer managed Encryption.
+			Order multiple device TA40, TA300
+Databases in GCP:
+-----------------
+	1. Relational Database:
+		Usually used for OLTP (online transaction processing)
+		also OLAP (Online Analytics processing)	
+    
+    2. No SQL Databases
 
-
-
+        Cloud firestore(Datastore)  Vs  Cloud BigTable
+        Recommended for small to medium databases(0 to few terrabytes)
+        Cloud Datastore: Managed serverless NoSQL document database.
+            -Provide ACID transaction, Sql like queries, indexes
+            -Design for transactional mobile web application
+        firestore: Next version of datastore adds
+            -Strong consistency, mobile and web client library.
