@@ -1,3 +1,6 @@
+https://github.com/in28minutes/course-material/blob/main/15-google-cloud-digital-leader/downloads.md
+all notes available here
+
 GCP Digital Leader Certifications: 
 Zones : Geo locations
 Region : Sub part of Zones.
@@ -16,7 +19,7 @@ Google Compute engine:
         echo "Hello World from $(hostname) $(hostname -i)"
         echo "Hello world from $(hostname) $(hostname -i)" > /var/www/html/index.html
         sudo service apache2 start
-IP Address of virual machine           -                   Description
+IP Address of virtual machine           -                   Description
     Internal IP address                         Permanent Internal IP, does not change during 
                                                 lifetime of instance. Internal permannent IP of VM
     External / Ephemeral IP address             Ephemeral/External IP Address that changes when
@@ -27,9 +30,9 @@ IP Address of virual machine           -                   Description
 Simplify VM HTTP Server setup:
     Options to do that:
         Startup Script : 
-        Instance Temaplte :
+        Instance Template :
         Custom Image : 
-            Installing OS patches and sodtwares at launch of instance increase boot up time.
+            Installing OS patches and softwares at launch of instance increase boot up time.
             So in GCP we can create custom custom image with OS patches and soft preinstall
             Custom image can be created from instance, hdd, a snapshot, another image, or cloud storage
             Can be shared across project
@@ -39,7 +42,7 @@ Simplify VM HTTP Server setup:
     apt update 
     apt -y install apache2
     echo "Hello world from $(hostname) $(hostname -I)" > /var/www/html/index.html
-[5:22 PM] Prashant Giri
+
 GCP Discounts :
 	- Sustain usage cost
 	- only compute machine created by Google Kubernetes Engine (GKE)
@@ -67,8 +70,9 @@ Preemptible VM:
 Spot VMs:
 	- Similar to Preemptible VMs only diff is Does not have maximum runtime of 24hours.
 	- Dynamic pricing 60-90%, Free tier credit not applicable.
+
 Compute Engine - Sole tenant nodes:
-	*Shared tenancy - by default, single tenant machine can have instances multiple customers.
+	*Shared tenancy - by default, single tenant machine can have instances for multiple customers.
 	*Sole Tenant Node - Virtual machine on hardware dedicated to one customer.
 	*Use Cases: 
 		- Security and Compliance requirements : You want your VM's to be physically separated from those in other projects.
@@ -195,6 +199,7 @@ MANAGED SERVICES: Section 4
 			SaaS = Content + Access Policies + Usage
 			PaaS = Saas + Deployment + Web applicable Security 
 			IaaS = PaaS + Operation + Network Security + Guest OS
+
 GCP Managed services for Compute:
 ---------------------------------
 	Compute Engine 				- IaaS - High peroformance and general purpose VMs that scale globally.
@@ -211,7 +216,7 @@ GCP Managed services for Compute:
 		-Support Go, Java, .Net, NodeJs, PHP, Python, Ruby using preconfigured runtime.
 		-Use Custome run time and Write code in any language
 		-Connect to variety of Google cloud storage products (Cloud Sql etc)
-		- NO usage charges, Pay for resource provisioned.
+		-NO usage charges, Pay for resource provisioned.
 		Features : Aumatic load Balancing, Auto Scalling, Managed platform update, 
 			Application health Monitoring, Application versioning, Traffic splitting
 	Compute Engine                            Vs                     App Engine
@@ -237,7 +242,8 @@ GCP Managed services for Compute:
 			 - commands
 			 - gcloud app deploy
 			 - gcloud app deploy --version v2
-			 - gcloud app browse --version v1  => Can access older version also
+			 - gcloud app browse --version v1  => Can access older version also.
+
 	Google Kubernetes Engine (GKE):
 	-------------------------------
 		-Most popular open source container Orchestration Service.
@@ -291,6 +297,7 @@ GCP Managed services for Compute:
 			gcloud projects list                      -----> See project details, Id
 			gcloud config set project [project-id]	  -----> Set Project 
 			gcloud container cluster delete	[cluster-name]	--zone [zone-name]	  -----> this command will delete cluster
+
 	Cloud Function:
 	---------------
 		Imagine you want to execute some code when any event happens like
@@ -302,6 +309,7 @@ GCP Managed services for Compute:
 		Time Bound - default 1min and max 9min (540sec) for first gen option
 		Need "Cloud build API" enabled to deploy cloud function
 		**Video 58 create first Google cloud function
+
 	Cloud Run & Cloud Run for Anthos:
 	---------------------------------
 		- Cloud Run - "Container to production in seconds"
@@ -318,6 +326,7 @@ GCP Managed services for Compute:
 		- Search cloud run => select "hello" service (sample provided by GCP) => set service name 
 		=> region (once service name and region set then we can not change it)
 		=> Set CPU allocation and pricing => set autoscalling
+
 Block, File and Object storage in GCP:
 --------------------------------------
 	Block Storage:
@@ -347,6 +356,7 @@ Block, File and Object storage in GCP:
 		- Provide Rest API to access and modify the object.
 		- provide CLI called "gsutils"
 		- Stores all files: text, binary, backups and archive, media files
+
 	Cloud Storage - Storage Class - Introduction:
 		- Storage class help you to optimized cost based on your access needs.
 		- Design for durability 99.9999999999 (11 9's)
@@ -357,7 +367,7 @@ Block, File and Object storage in GCP:
 			- Archive  :  Read/modify less that once a year   min storage duration : 365days
 	Object lifecycle management:
 		-Files are frquently accessed when they are created
-		-
+		
 	Transferring data on prepmises to cloud:
 		There is two option
 		1. Online Transfer : Recommanded when data is less than 1TB.
@@ -375,14 +385,19 @@ Block, File and Object storage in GCP:
 			Fast Copy upto 40Gbps
 			AES - Encryption 256 - customer managed Encryption.
 			Order multiple device TA40, TA300
+
 Databases in GCP:
 -----------------
 	1. Relational Database:
 		Usually used for OLTP (online transaction processing)
 		also OLAP (Online Analytics processing)	
     
-    2. No SQL Databases
+	Relational OLTP databases : Cloud Sql, Cloud Spanner - Need Schema and strong transactional capabilities
+		-Cloud Sql : MySql, Postgress Sql, Sql severs
+		-Cloud Spanner: 
 
+
+    2. No SQL Databases:
         Cloud firestore(Datastore)  Vs  Cloud BigTable
         Recommended for small to medium databases(0 to few terrabytes)
         Cloud Datastore: Managed serverless NoSQL document database.
@@ -390,3 +405,111 @@ Databases in GCP:
             -Design for transactional mobile web application
         firestore: Next version of datastore adds
             -Strong consistency, mobile and web client library.
+	
+		BigTable: Used for Large Storage, 10TB-PB's,
+			-Use cases like streaming, IOT, analytics
+			-NOT Serverless
+
+	3. In Memory Databases:
+		-Retrieving data from memory is much faster than from a disk
+		-In memory database like Redies provide microsecond latency by storing persistent data in memory.
+		-Recomended GCP managed service like  "Memory Store"
+		-Use Cases: Caching, Session management,Gaming leaderboard, GeoSpatial app.
+
+Cloud IAM (Identity and Access Management):
+-------------------------------------------
+	-Authentication: It is the right user ? 
+	-Authorization:  do they have the right access?
+	-Identities: It can be User, group of Users, Softwares
+	-Provide very granular control:
+		-Limit a single user to perform
+			>single action
+			>on a specific cloud resource
+			>from a specific IP address
+			>during specific Time window
+
+	Roles and Permission:
+		-Perform some set of action on some set of resources.
+		-3 Types
+			a. Basic Roles - (Not recomended in production)
+				Viewer : View  
+				Editor : View + Edit
+				Owner  : View + Edit + Manage permission and roles
+
+			b. Predefined Roles : (recomended in production)
+				-Fined grainer roles predifined and managed by Google
+				-Different roles for diff purpose : Ex storage admin, storage obj creator, viewer
+			c. Custome Roles : We can create own rules
+
+	* IAM Best Practises:
+		-Principle of least privileges.
+			-Basic Roles are not reccomended.
+			-Prefer predefined roles are possible
+
+		-Use Service Account with minimum privileges
+			-Use different Service accounts for different app/purpose
+
+		-Separation of duties:
+			-Involve atleast 2 people in sensitive tasks
+			Ex:Have separate deployer and traffic migrator
+			AppEngine provides App Engine deployer and App Engine Service Admin roles.
+
+		-Constant Monitoring:
+			-Review cloud audit logs to audit changes to IAM.
+			-Archive Cloud audit logs in cloud storage buckets for long term retention.
+
+		-Use groups whenever possible : easy to manage users and permission
+
+
+Cloud Computing:
+
+		Public Vs Private Vs Hybrid Cloud?
+
+	-Public Cloud: Hardware owned by Google Cloud and shared between customer
+	-Private Cloud: Hardware owned by you. all hosting and other responsibility is yours.
+	-Hybrid Cloud: Combination of public and private 
+	-Multi Cloud: Using multiple cloud platform with or without on premises infrastructure.
+				-More flexibility
+				-Increase complexity
+
+
+Oraganize Google Cloud Resources:
+		Organization => folder => n..th Projects
+
+Billing Account:
+	-It is mandatory to create resources in GCP
+	-Search 'Billing Account' and explore details
+	-Billing account accossited with Project, we can create multiple billing account.
+	-2 types => 
+		1.Self Serve: Billed directly from Bank Account/Credit card
+		2.Invoiced: Generate invoices(Used by large enterprize)
+
+	Managing Budget, Alerts, and Exports:
+		-configure Alerts
+		-Default alert threshold 50%, 90and 100%;
+
+	Billing data can be exported on a schedule to:
+		1. Big Query (If you want to query/Vizualizing)
+		2. Cloud Storage (for history/archieving)
+
+
+*Hybrid cloud:
+	Cloud VPN
+
+
+*Practise pricing calculator:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
